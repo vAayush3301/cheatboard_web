@@ -197,17 +197,22 @@ nav{
     white-space: nowrap;
 }
 
-.page-scale {
+.page {
     width: 1200px;
-    transform-origin: top left;
+    height: 800px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform-origin: center center;
+    transform: translate(-50%, -50%);
 }
 
 @media (max-width: 1200px) {
-    .page-scale {
-        transform: scale(calc(100vw / 1200));
-    }
-
-    body {
-        overflow-x: hidden;
+    .page {
+        transform:
+            translate(-50%, -50%)
+            scale(calc(100vw / 1200));
     }
 }
