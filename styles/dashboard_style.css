@@ -65,6 +65,20 @@ nav{
     background: red;
 }
 
+#newChat{
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background: rgb(2, 159, 221);
+    color: black;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#newChat:hover{
+    background: rgb(0, 183, 255);
+}
+
 @media (max-width: 600px){
 
     nav{
