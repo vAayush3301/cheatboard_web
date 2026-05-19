@@ -196,3 +196,18 @@ nav{
     color: gray;
     white-space: nowrap;
 }
+
+.page-scale {
+    width: 1200px;
+    transform-origin: top left;
+}
+
+@media (max-width: 1200px) {
+    .page-scale {
+        transform: scale(calc(100vw / 1200));
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+}
