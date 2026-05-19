@@ -74,3 +74,40 @@ logoutBtn.addEventListener(
             "/";
     }
 );
+
+const data = [
+    {
+        title: "Blink Chat",
+        subtitle: "Realtime messaging app",
+        meta: "Updated 2 min ago"
+    },
+    {
+        title: "Task Manager",
+        subtitle: "Organize daily tasks",
+        meta: "Pending sync"
+    },
+    {
+        title: "Weather App",
+        subtitle: "Live weather data",
+        meta: "Stable build"
+    }
+];
+
+const itemList = document.getElementById("itemList");
+
+data.forEach(item => {
+
+    const li = document.createElement("li");
+    li.className = "list-item";
+
+    li.innerHTML = `
+        <div class="title">${item.title}</div>
+
+        <div class="subtitle">
+            <div class="message">${item.subtitle}</div>
+            <div class="meta">${item.meta}</div>
+        </div>
+    `;
+
+    itemList.appendChild(li);
+});
