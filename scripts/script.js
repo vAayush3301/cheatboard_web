@@ -41,6 +41,15 @@ const copyCodeBtn =
 const doneBtn =
     document.getElementById("doneBtn");
 
+const aboutBtn =
+    document.getElementById("aboutUs");
+
+const aboutDialog =
+    document.getElementById("aboutDialog");
+
+const closeAboutBtn =
+    document.getElementById("closeAboutBtn");
+
 retrieveBtn.addEventListener("click", () => {
 
     retrieveForm.hidden = false;
@@ -278,3 +287,25 @@ function startCountdown(expiryTime) {
     expiryInterval = setInterval(update, 60000);
 
 }
+
+aboutBtn.addEventListener("click", () => {
+
+    aboutDialog.showModal();
+
+});
+
+
+closeAboutBtn.addEventListener("click", () => {
+
+    aboutDialog.close();
+
+});
+
+
+aboutDialog.addEventListener("click", (event) => {
+
+    if (event.target === aboutDialog) {
+        aboutDialog.close();
+    }
+
+});
