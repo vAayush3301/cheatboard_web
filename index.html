@@ -60,6 +60,50 @@
 
 </main>
 
+    <dialog id="retrieveDialog">
+
+        <h2>Retrieve Text</h2>
+
+        <p>Enter your share code.</p>
+
+        <input
+            id="shareCode"
+            type="text"
+            maxlength="6"
+            placeholder="AB1234"
+        >
+
+        <div class="dialog-buttons">
+            <button id="cancelBtn" class="secondary-btn">
+                Cancel
+            </button>
+
+            <button id="retrieveCodeBtn" class="primary-btn">
+                Retrieve
+            </button>
+        </div>
+
+        <div id="resultSection" hidden>
+
+            <hr>
+            <div class="retrieved-toolbar">
+                <h3>Retrieved Text</h3>
+
+                <button id="copyBtn" class="secondary-btn">
+                    📋 Copy
+                </button>
+            </div>
+
+            <textarea
+                id="retrievedText"
+                readonly
+                spellcheck="false"
+            ></textarea>
+
+        </div>
+
+    </dialog>
+
 <script type="module" src="./scripts/script.js"></script>
 
 </body>
