@@ -1,28 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blink</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheatBoard</title>
 
-    <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-    <div class="viewport">
-    <div class="page-scale">
-    <div class="login-box">
-        <h1 style="text-align: center;">Blink</h1>
-        <h2 class="subtitle">Login</h2>
 
-        <button id="googleLoginBtn">
-            Login with Google
+<header class="navbar">
+    <div class="logo">
+        <h2>CheatBoard</h2>
+    </div>
+
+    <nav>
+        <button id="loginBtn" class="nav-btn">
+            Sign in
+        </button>
+    </nav>
+</header>
+
+<main class="hero">
+
+    <h1>Share Text. Skip the Sign-In.</h1>
+
+    <p class="hero-text">
+        Upload text instantly and retrieve it anywhere using a secret share code.
+        No account required for temporary sharing.
+    </p>
+
+    <div class="action-card">
+
+        <button id="uploadBtn" class="primary-btn">
+            Upload Text
         </button>
 
-        <p id="message"></p>
+        <button id="retrieveBtn" class="secondary-btn">
+            Retrieve Text
+        </button>
 
     </div>
 
-    <script type="module" src="./scripts/script.js"></script>
+    <div class="features">
+
+        <div class="feature">
+            🚀 No login for temporary uploads
+        </div>
+
+        <div class="feature">
+            🔑 Access using a secret code
+        </div>
+
+        <div class="feature">
+            👤 Sign in to save permanently
+        </div>
+
     </div>
+
+</main>
+
+<script type="module" src="./scripts/script.js"></script>
+
 </body>
 </html>

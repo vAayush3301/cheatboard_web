@@ -17,12 +17,6 @@ export default defineConfig({
                     resolve(
                         __dirname,
                         "index.html"
-                    ),
-
-                dashboard:
-                    resolve(
-                        __dirname,
-                        "dashboard.html"
                     )
             }
         }
