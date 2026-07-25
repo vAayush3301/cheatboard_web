@@ -23,20 +23,3 @@ export function requireAuth(callback) {
         }
     );
 }
-
-
-export function redirectIfLoggedIn() {
-
-    onAuthStateChanged(
-        auth,
-
-        (user) => {
-
-            if (user) {
-
-                window.location.href =
-                    "/index.html";
-            }
-        }
-    );
-}
