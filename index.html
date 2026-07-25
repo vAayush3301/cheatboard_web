@@ -15,8 +15,8 @@
     </div>
 
     <nav>
-        <button id="loginBtn" class="nav-btn">
-            Sign in
+        <button id="aboutUs" class="nav-btn">
+            About Us
         </button>
     </nav>
 </header>
@@ -45,15 +45,11 @@
     <div class="features">
 
         <div class="feature">
-            🚀 No login for temporary uploads
+            🚀 No login for uploads
         </div>
 
         <div class="feature">
             🔑 Access using a secret code
-        </div>
-
-        <div class="feature">
-            👤 Sign in to save permanently
         </div>
 
     </div>
@@ -85,7 +81,6 @@
 
         <div id="resultSection" hidden>
 
-            <hr>
             <div class="retrieved-toolbar">
                 <h3>Retrieved Text</h3>
 
@@ -99,6 +94,62 @@
                 readonly
                 spellcheck="false"
             ></textarea>
+
+            <div class="message-meta">
+
+                <div id="expiryCountdown">
+                    ⏳ Expires in --
+                </div>
+
+                <div id="expiryDate">
+                    📅 --
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </dialog>
+
+    <dialog id="uploadDialog">
+
+        <h2>Upload Text</h2>
+
+        <p>Paste or type your text below.</p>
+
+        <textarea
+            id="uploadText"
+            placeholder="Type something..."
+        ></textarea>
+
+        <div class="dialog-buttons">
+            <button id="uploadCancelBtn" class="secondary-btn">
+                Cancel
+            </button>
+
+            <button id="uploadSubmitBtn" class="primary-btn">
+                Upload
+            </button>
+        </div>
+
+        <div id="uploadResult" hidden>
+
+            <hr>
+
+            <h3>Share Code</h3>
+
+            <input
+                id="generatedCode"
+                readonly
+            >
+
+            <button
+                id="copyCodeBtn"
+                class="secondary-btn"
+            >
+                📋 Copy Code
+            </button>
 
         </div>
 

@@ -186,7 +186,7 @@ button {
     }
 }
 dialog {
-    width: 420px;
+    width: 620px;
     max-width: 90vw;
 
     border: none;
@@ -198,7 +198,7 @@ dialog {
 
     box-shadow: 0 20px 50px rgba(0,0,0,.45);
 
-    margin: auto; /* Important */
+    margin: auto;
 }
 
 dialog[open] {
@@ -214,9 +214,9 @@ dialog::backdrop {
 
 #shareCode {
 
-    width: 100%;
+    width: 70%;
 
-    margin: 20px 0;
+    margin: auto;
 
     padding: 5px;
 
@@ -306,4 +306,67 @@ dialog::backdrop {
     padding: 8px 18px;
 
     font-size: .9rem;
+}
+#uploadText{
+
+    width:100%;
+    height:260px;
+
+    margin:15px 0;
+
+    padding:16px;
+
+    resize:none;
+
+    border:none;
+    border-radius:10px;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:.95rem;
+}
+
+#generatedCode{
+
+    width:100%;
+
+    margin:15px 0;
+
+    padding:14px;
+
+    text-align:center;
+
+    letter-spacing:.3rem;
+
+    font-size:1.4rem;
+
+    border:none;
+    border-radius:10px;
+
+    background:rgba(255,255,255,.08);
+
+    color:white;
+}
+
+.message-meta{
+
+    margin-top:16px;
+    padding-top:16px;
+
+    border-top:1px solid rgba(255,255,255,.12);
+
+    color:#cbd5e1;
+
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+
+    font-size:.9rem;
+}
+
+#expiryCountdown{
+    color:#22c55e;
+    font-weight:600;
 }
