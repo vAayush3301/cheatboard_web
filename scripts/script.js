@@ -1,20 +1,28 @@
-const SAMPLE_CODE = "AB1234";
-
 const retrieveBtn = document.getElementById("retrieveBtn");
 const dialog = document.getElementById("retrieveDialog");
 
+const retrieveForm = document.getElementById("retrieveForm");
+const retrieveSuccess = document.getElementById("retrieveSuccess");
+
 const cancelBtn = document.getElementById("cancelBtn");
 const retrieveCodeBtn = document.getElementById("retrieveCodeBtn");
+const closeRetrieveBtn = document.getElementById("closeRetrieveBtn");
 
 const shareCodeInput = document.getElementById("shareCode");
 
-const resultSection = document.getElementById("resultSection");
 const retrievedText = document.getElementById("retrievedText");
-
 const copyBtn = document.getElementById("copyBtn");
+
+const expiryCountdown = document.getElementById("expiryCountdown");
+const expiryDate = document.getElementById("expiryDate");
+
+let expiryInterval = null;
 
 const uploadBtn = document.getElementById("uploadBtn");
 const uploadDialog = document.getElementById("uploadDialog");
+
+const uploadForm = document.getElementById("uploadForm");
+const uploadSuccess = document.getElementById("uploadSuccess");
 
 const uploadText = document.getElementById("uploadText");
 
@@ -24,33 +32,21 @@ const uploadSubmitBtn =
 const uploadCancelBtn =
     document.getElementById("uploadCancelBtn");
 
-const uploadResult =
-    document.getElementById("uploadResult");
-
 const generatedCode =
     document.getElementById("generatedCode");
 
 const copyCodeBtn =
     document.getElementById("copyCodeBtn");
 
-const expiryCountdown =
-    document.getElementById("expiryCountdown");
+const doneBtn =
+    document.getElementById("doneBtn");
 
-const expiryDate =
-    document.getElementById("expiryDate");
+retrieveBtn.addEventListener("click", () => {
 
-const expiresAt =
-    Date.now() + 24 * 60 * 60 * 1000;
-
-expiryDate.textContent =
-    "📅 " +
-    new Date(expiresAt).toLocaleString();
-
-retrieveBtn?.addEventListener("click", () => {
+    retrieveForm.hidden = false;
+    retrieveSuccess.hidden = true;
 
     shareCodeInput.value = "";
-
-    resultSection.hidden = true;
     retrievedText.value = "";
 
     dialog.showModal();
@@ -59,13 +55,11 @@ retrieveBtn?.addEventListener("click", () => {
 
 });
 
-cancelBtn?.addEventListener("click", () => {
+cancelBtn.addEventListener("click", () => dialog.close());
 
-    dialog.close();
+closeRetrieveBtn.addEventListener("click", () => dialog.close());
 
-});
-
-shareCodeInput?.addEventListener("input", () => {
+shareCodeInput.addEventListener("input", () => {
 
     shareCodeInput.value = shareCodeInput.value
         .toUpperCase()
@@ -74,86 +68,96 @@ shareCodeInput?.addEventListener("input", () => {
 
 });
 
-shareCodeInput?.addEventListener("keydown", (event) => {
+shareCodeInput.addEventListener("keydown", e => {
 
-    if (event.key === "Enter") {
+    if (e.key === "Enter")
         retrieveCodeBtn.click();
-    }
 
 });
 
-retrieveCodeBtn?.addEventListener("click", async () => {
+retrieveCodeBtn.addEventListener("click", async () => {
 
     const code = shareCodeInput.value.trim();
 
     if (!/^[A-Z]{2}\d{4}$/.test(code)) {
-
         alert("Share code must be in the format AB1234.");
         return;
-
     }
 
-    if (code !== SAMPLE_CODE) {
+    retrieveCodeBtn.disabled = true;
+    retrieveCodeBtn.textContent = "Retrieving...";
 
-        alert("Share code not found.");
-        return;
+    try {
+
+        const response = await fetch(
+            `https://blink-g8w4.onrender.com/retrieve/${code}`
+        );
+
+        if (!response.ok) {
+
+            const error = await response.json();
+
+            throw new Error(
+                error.message || "Failed to retrieve text."
+            );
+
+        }
+
+        const upload = await response.json();
+
+        retrievedText.value = upload.text;
+
+        expiryDate.textContent =
+            "📅 " +
+            new Date(upload.expiryTime).toLocaleString();
+
+        startCountdown(upload.expiryTime);
+
+        retrieveForm.hidden = true;
+        retrieveSuccess.hidden = false;
+
+    } catch (error) {
+
+        alert(error.message);
+
+    } finally {
+
+        retrieveCodeBtn.disabled = false;
+        retrieveCodeBtn.textContent = "Retrieve";
 
     }
-
-    // Later this section will fetch from Firebase RTDB.
-
-    retrievedText.value =
-            `🎉 Congratulations!
-
-            You successfully retrieved the sample message.
-
-            Share Code: AB1234
-
-            This is where your shared text will appear once Firebase is connected.
-
-            For now, this is just placeholder content.`;
-
-    resultSection.hidden = false;
 
 });
 
-dialog?.addEventListener("cancel", (event) => {
+dialog.addEventListener("cancel", e => {
 
-    event.preventDefault();
+    e.preventDefault();
     dialog.close();
 
 });
 
-copyBtn?.addEventListener("click", async () => {
+copyBtn.addEventListener("click", async () => {
 
-    try {
+    await navigator.clipboard.writeText(
+        retrievedText.value
+    );
 
-        await navigator.clipboard.writeText(
-            retrievedText.value
-        );
+    copyBtn.textContent = "✓ Copied";
 
-        copyBtn.textContent = "✓ Copied";
+    setTimeout(() => {
 
-        setTimeout(() => {
+        copyBtn.textContent = "📋 Copy";
 
-            copyBtn.textContent = "📋 Copy";
-
-        }, 1500);
-
-    } catch (error) {
-
-        retrievedText.select();
-        document.execCommand("copy");
-
-    }
+    }, 1500);
 
 });
 
 uploadBtn.addEventListener("click", () => {
 
-    uploadText.value = "";
+    uploadForm.hidden = false;
+    uploadSuccess.hidden = true;
 
-    uploadResult.hidden = true;
+    uploadText.value = "";
 
     uploadDialog.showModal();
 
@@ -165,18 +169,65 @@ uploadCancelBtn.addEventListener("click", () => {
 
 });
 
-uploadSubmitBtn.addEventListener("click", () => {
+doneBtn.addEventListener("click", () => {
 
-    if (!uploadText.value.trim()) {
+    uploadDialog.close();
 
-        alert("Enter some text first.");
+});
+
+uploadSubmitBtn.addEventListener("click", async () => {
+
+    const text = uploadText.value.trim();
+
+    if (!text) {
+
+        alert("Please enter some text.");
         return;
 
     }
 
-    generatedCode.value = "AB1234";
+    uploadSubmitBtn.disabled = true;
+    uploadSubmitBtn.textContent = "Creating...";
 
-    uploadResult.hidden = false;
+    try {
+
+        const response = await fetch(
+            "https://blink-g8w4.onrender.com/publish",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain"
+                },
+                body: text
+            }
+        );
+
+        if (!response.ok)
+            throw new Error();
+
+        const code =
+            await response.text();
+
+        generatedCode.value = code;
+
+        uploadForm.hidden = true;
+        uploadSuccess.hidden = false;
+
+    }
+    catch (error) {
+
+        console.error(error);
+
+        alert("Failed to upload.");
+
+    }
+    finally {
+
+        uploadSubmitBtn.disabled = false;
+        uploadSubmitBtn.textContent =
+            "Create Share Code";
+
+    }
 
 });
 
@@ -190,34 +241,40 @@ copyCodeBtn.addEventListener("click", async () => {
 
     setTimeout(() => {
 
-        copyCodeBtn.textContent = "📋 Copy Code";
+        copyCodeBtn.textContent =
+            "📋 Copy Code";
 
     }, 1500);
 
 });
 
-function updateCountdown() {
+function startCountdown(expiryTime) {
 
-    const remaining =
-        expiresAt - Date.now();
+    clearInterval(expiryInterval);
 
-    if (remaining <= 0) {
+    function update() {
+
+        const remaining = expiryTime - Date.now();
+
+        if (remaining <= 0) {
+
+            expiryCountdown.textContent = "🔴 Expired";
+
+            clearInterval(expiryInterval);
+            return;
+
+        }
+
+        const h = Math.floor(remaining / 3600000);
+        const m = Math.floor((remaining % 3600000) / 60000);
 
         expiryCountdown.textContent =
-            "🔴 Expired";
+            `⏳ Expires in ${h}h ${m}m`;
 
-        return;
     }
 
-    const h =
-        Math.floor(remaining / 3600000);
+    update();
 
-    const m =
-        Math.floor((remaining % 3600000) / 60000);
+    expiryInterval = setInterval(update, 60000);
 
-    expiryCountdown.textContent =
-        `⏳ Expires in ${h}h ${m}m`;
 }
-
-updateCountdown();
-setInterval(updateCountdown, 60000);

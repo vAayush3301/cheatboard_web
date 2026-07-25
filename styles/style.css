@@ -370,3 +370,18 @@ dialog::backdrop {
     color:#22c55e;
     font-weight:600;
 }
+
+#uploadSuccess,
+#retrieveSuccess, #retrieveForm {
+
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+
+}
+
+[hidden]{
+
+    display:none !important;
+
+}

@@ -58,97 +58,99 @@
 
     <dialog id="retrieveDialog">
 
-        <h2>Retrieve Text</h2>
+        <div id="retrieveForm">
 
-        <p>Enter your share code.</p>
+            <h2>Retrieve Text</h2>
 
-        <input
-            id="shareCode"
-            type="text"
-            maxlength="6"
-            placeholder="AB1234"
-        >
+            <input id="shareCode">
 
-        <div class="dialog-buttons">
-            <button id="cancelBtn" class="secondary-btn">
-                Cancel
-            </button>
+            <div class="dialog-buttons">
+                <button id="cancelBtn">
+                    Cancel
+                </button>
 
-            <button id="retrieveCodeBtn" class="primary-btn">
-                Retrieve
-            </button>
+                <button id="retrieveCodeBtn">
+                    Retrieve
+                </button>
+            </div>
+
         </div>
 
-        <div id="resultSection" hidden>
+        <div id="retrieveSuccess" hidden>
 
             <div class="retrieved-toolbar">
-                <h3>Retrieved Text</h3>
 
-                <button id="copyBtn" class="secondary-btn">
+                <h2>Retrieved Text</h2>
+
+                <button id="copyBtn">
                     📋 Copy
                 </button>
+
             </div>
 
             <textarea
                 id="retrievedText"
                 readonly
-                spellcheck="false"
             ></textarea>
 
             <div class="message-meta">
 
-                <div id="expiryCountdown">
+                <p id="expiryCountdown">
                     ⏳ Expires in --
-                </div>
+                </p>
 
-                <div id="expiryDate">
+                <p id="expiryDate">
                     📅 --
-                </div>
+                </p>
 
             </div>
 
-        </div>
+            <button id="closeRetrieveBtn">
+                Close
+            </button>
 
+        </div>
 
     </dialog>
 
     <dialog id="uploadDialog">
 
-        <h2>Upload Text</h2>
+        <div id="uploadForm">
 
-        <p>Paste or type your text below.</p>
+            <h2>Upload Text</h2>
 
-        <textarea
-            id="uploadText"
-            placeholder="Type something..."
-        ></textarea>
+            <textarea id="uploadText"></textarea>
 
-        <div class="dialog-buttons">
-            <button id="uploadCancelBtn" class="secondary-btn">
-                Cancel
-            </button>
+            <div class="dialog-buttons">
+                <button id="uploadCancelBtn">Cancel</button>
+                <button id="uploadSubmitBtn">
+                    Create Share Code
+                </button>
+            </div>
 
-            <button id="uploadSubmitBtn" class="primary-btn">
-                Upload
-            </button>
         </div>
 
-        <div id="uploadResult" hidden>
+        <div id="uploadSuccess" hidden>
 
-            <hr>
+            <h2>✓ Uploaded Successfully</h2>
 
-            <h3>Share Code</h3>
+            <p>Your Share Code</p>
 
             <input
                 id="generatedCode"
                 readonly
             >
 
-            <button
-                id="copyCodeBtn"
-                class="secondary-btn"
-            >
+            <button id="copyCodeBtn">
                 📋 Copy Code
+            </button>
+
+            <p class="expiry">
+                ⏳ Expires in 24 hours
+            </p>
+
+            <button id="doneBtn">
+                Done
             </button>
 
         </div>
