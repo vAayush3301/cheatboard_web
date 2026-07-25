@@ -35,7 +35,7 @@ export function redirectIfLoggedIn() {
             if (user) {
 
                 window.location.href =
-                    "/dashboard.html";
+                    "/index.html";
             }
         }
     );
